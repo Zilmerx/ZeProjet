@@ -15,8 +15,8 @@ Permet d'executer une, ou une serie de fonction au moment de l'activation d'une 
 
 class KeyboardReader
 {
-   // Tableau de tableau de fonctions. KeyPressCallbackList[1][0] retourne la premiere fonction devant s'executer lorsque quelqu'un pese sur le caractere #1 du clavier.
-   std::vector<std::vector<std::function<void(void)>>> m_CallbackList;
+   // Tableau de tableau de fonctions. KeyPressCallbackList[0] retourne la fonction devant s'executer lorsque quelqu'un pese sur le caractere #1 du clavier.
+   std::vector<std::function<void(void)>> m_CallbackList;
 
    // Thread faisant rouler la fonction privee callFuncOnKeyPress.
    std::thread m_Thread;
@@ -35,7 +35,7 @@ public:
    void stop();
 
    // Gerer les fonctions a callback
-   void addFunction(int keyValue, std::function<void(void)> func);
+   void setFunction(int keyValue, std::function<void(void)> func);
    void clearFunction(int keyValue);
 
 private:

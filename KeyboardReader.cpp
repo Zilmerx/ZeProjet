@@ -41,16 +41,16 @@ void KeyboardReader::stop()
 #pragma endregion
 
 #pragma region Gerer les fonctions
-void KeyboardReader::addFunction(int keyValue, std::function<void(void)> func)
+void KeyboardReader::setFunction(int keyValue, std::function<void(void)> func)
 {
    validateKeyValue(keyValue);
-   m_CallbackList[keyValue - MINKEYVALUE].push_back(func);
+   m_CallbackList[keyValue - MINKEYVALUE] = func;
 }
 
 void KeyboardReader::clearFunction(int keyValue)
 {
    validateKeyValue(keyValue);
-   m_CallbackList[keyValue - MINKEYVALUE].clear();
+   m_CallbackList[keyValue - MINKEYVALUE] = nullptr;
 }
 #pragma endregion
 
@@ -97,12 +97,9 @@ int KeyboardReader::waitForKeypress() const
 void KeyboardReader::executeKeyValue(int keyValue) const
 {
    validateKeyValue(keyValue);
-   for (std::function<void(void)> f : m_CallbackList[keyValue - MINKEYVALUE])
+   if (m_CallbackList[keyValue - MINKEYVALUE] != nullptr)
    {
-      if (!m_RunThread)
-         break;
-
-      f();
+      m_CallbackList[keyValue - MINKEYVALUE]();
    }
 }
 
