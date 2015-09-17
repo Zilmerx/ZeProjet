@@ -96,7 +96,6 @@ int KeyboardReader::waitForKeypress() const
 
 void KeyboardReader::executeKeyValue(int keyValue) const
 {
-   validateKeyValue(keyValue);
    if (m_CallbackList[keyValue - MINKEYVALUE] != nullptr)
    {
       m_CallbackList[keyValue - MINKEYVALUE]();
