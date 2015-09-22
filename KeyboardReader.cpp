@@ -72,10 +72,14 @@ void KeyboardReader::callFuncOnKeyPress() const
 {
    while (m_RunThread)
    {
-      executeKeyValue(waitForKeypress());
+      int val = waitForKeypress();
+
+      if (val != -1)
+         executeKeyValue(val);
    }
 }
 
+// -1 == m_RunThread est tombé à false.
 int KeyboardReader::waitForKeypress() const
 {
    int c = 0;
@@ -83,7 +87,10 @@ int KeyboardReader::waitForKeypress() const
    do
    {
       if (!m_RunThread)
+      {
+         c = -1;
          break;
+      }
 
       if (_kbhit())
       {
